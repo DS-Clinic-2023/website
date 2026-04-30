@@ -163,6 +163,11 @@ $(`form[action="${contactUsApi}"]`).each(function (i,el) {
 // Appointments form function.
 $(`form[action="${appointmentsApi}"]`).each(function (i,el) {
     let form = $(el);
+    // Forms handled by the dedicated reCAPTCHA flow below should not also
+    // use the generic appointment AJAX handler, otherwise the booking is sent twice.
+    if (form.attr("id") === "wf-form-Appointments") {
+        return;
+    }
     form.submit(function (e) {
         e.preventDefault();
         form = $(e.target);
